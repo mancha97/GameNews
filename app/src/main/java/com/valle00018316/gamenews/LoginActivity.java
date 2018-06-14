@@ -146,6 +146,7 @@ public class LoginActivity extends AppCompatActivity {
                      setPreferences(response.body());
                      onLoginSuccess();
                      Toast.makeText(LoginActivity.this, "LOGUEADO", Toast.LENGTH_SHORT).show();
+                     starthome();
 
                 }else if (response.code() == 401) {
                     onLoginFailed();
@@ -177,6 +178,12 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
         editor.commit();
+    }
+
+    public void starthome(){
+        Intent homeIntent= new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(homeIntent);
+        finish();
     }
 
 
