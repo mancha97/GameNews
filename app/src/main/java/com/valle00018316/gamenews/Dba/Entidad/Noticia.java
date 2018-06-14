@@ -1,7 +1,8 @@
-package com.valle00018316.gamenews.Dba.Entity;
+package com.valle00018316.gamenews.Dba.Entidad;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -10,26 +11,27 @@ public class Noticia {
 
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "_id")
     private String id;
-    private String title, coverImage, description, body, game;
-    @ColumnInfo(name = "create_date")
-    private String cDate;
+    private String title, coverImage, description, body,createdDate, game;
+
     private int isFav;
 
-    public Noticia(@NonNull String id, String title, String coverImage, String description, String body, String game, String cDate, int isFav) {
+    public Noticia(@NonNull String id, String title, String coverImage, String description, String body, String game, String createdDate,  int isFav) {
         this.id = id;
         this.title = title;
         this.coverImage = coverImage;
         this.description = description;
         this.body = body;
         this.game = game;
-        this.cDate = cDate;
+        this.createdDate = createdDate;
         this.isFav = isFav;
     }
 
+
+
     @NonNull
     public String getId() {
+
         return id;
     }
 
@@ -78,12 +80,12 @@ public class Noticia {
         this.game = game;
     }
 
-    public String getcDate() {
-        return cDate;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setcDate(String cDate) {
-        this.cDate = cDate;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
     }
 
     public int getIsFav() {

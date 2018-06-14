@@ -1,4 +1,4 @@
-package com.valle00018316.gamenews.Dba.Entity;
+package com.valle00018316.gamenews.Dba.Entidad;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
