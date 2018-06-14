@@ -33,15 +33,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private String access;
+
     private CatVM catviewm;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("logbait",MODE_PRIVATE);
-        access=sharedPreferences.getString("token","");
 
         GameNDatabase.getDatabase(getApplicationContext());
         catviewm= ViewModelProviders.of(this).get(CatVM.class);
