@@ -33,8 +33,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-
+    NavigationView navigationView;
+    Toolbar toolbar;
     private CatVM catviewm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,66 +48,69 @@ public class HomeActivity extends AppCompatActivity {
         catviewm.getCategories().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(@Nullable List<Categoria> categorias) {
-
+                setGameMenu(categorias);
             }
         });
+
         drawerLayout = findViewById(R.id.drawerLayout);
-        NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                item.setChecked(true);
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        navigationView = findViewById(R.id.navigationView);
 
 
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                item.setChecked(true);
+//                drawerLayout.closeDrawers();
+//                return true;
+//            }
+//        });
 
-                        boolean fragmentTransaction = false;
-                        Fragment fragment = null;
+
+//        navigationView.setNavigationItemSelectedListener(
+//                new NavigationView.OnNavigationItemSelectedListener() {
+//                    @Override
+//                    public boolean onNavigationItemSelected(MenuItem menuItem) {
 //
-//                        switch (menuItem.getItemId()) {
-//                            case R.id.item1:
-//                                fragment = new Fragment1();
-//                                fragmentTransaction = true;
-//                                break;
-//                            case R.id.item2:
-//                                fragment = new Fragment2();
-//                                fragmentTransaction = true;
-//                                break;
-//                            case R.id.item3:
-//                                fragment = new Fragment3();
-//                                fragmentTransaction = true;
-//                                break;
-//                            case R.id.item4:
-//                                fragment = new Fragment4();
-//                                fragmentTransaction = true;
-//                                break;
-//                            case R.id.item5:
-//                                fragment = new Fragment5();
-//                                fragmentTransaction = true;
-//                                break;
-//                        }
-
-                        if(fragmentTransaction) {
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.content_frame, fragment)
-                                    .commit();
-
-                            menuItem.setChecked(true);
-                            getSupportActionBar().setTitle(menuItem.getTitle());
-                        }
-
-                        drawerLayout.closeDrawers();
-
-                        return true;
-                    }
-                });
+////                        boolean fragmentTransaction = false;
+////                        Fragment fragment = null;
+////
+////                        switch (menuItem.getItemId()) {
+////                            case R.id.item1:
+////                                fragment = new Fragment1();
+////                                fragmentTransaction = true;
+////                                break;
+////                            case R.id.item2:
+////                                fragment = new Fragment2();
+////                                fragmentTransaction = true;
+////                                break;
+////                            case R.id.item3:
+////                                fragment = new Fragment3();
+////                                fragmentTransaction = true;
+////                                break;
+////                            case R.id.item4:
+////                                fragment = new Fragment4();
+////                                fragmentTransaction = true;
+////                                break;
+////                            case R.id.item5:
+////                                fragment = new Fragment5();
+////                                fragmentTransaction = true;
+////                                break;
+////                        }
+//
+////                        if(fragmentTransaction) {
+////                            getSupportFragmentManager().beginTransaction()
+////                                    .replace(R.id.content_frame, fragment)
+////                                    .commit();
+////
+////                            menuItem.setChecked(true);
+////                            getSupportActionBar().setTitle(menuItem.getTitle());
+////                        }
+//
+////                        drawerLayout.closeDrawers();
+//
+//                        return true;
+//                    }
+//                });
 
 
         Toolbar appbar = (Toolbar) findViewById(R.id.appbar);
@@ -128,6 +133,14 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setGameMenu(List<Categoria> listag){
+        navigationView.getMenu().findItem(R.id.item2).getSubMenu().clear();
+
+        for (Categoria game : listag){
+            navigationView.getMenu().findItem(R.id.item2).getSubMenu().add(game.getName().toUpperCase());
+        }
     }
 
 }
