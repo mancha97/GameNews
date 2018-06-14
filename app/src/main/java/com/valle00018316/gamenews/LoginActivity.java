@@ -173,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setPreferences(String token){
-        SharedPreferences sharedPreferences = this.getSharedPreferences("logged", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("logbait", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("token", token);
         editor.commit();
