@@ -14,8 +14,6 @@ import com.valle00018316.gamenews.Dba.Entidad.Player;
 
 @Database(entities = {Noticia.class, Player.class, Categoria.class}, version = 1, exportSchema = false)
 public abstract class GameNDatabase extends RoomDatabase {
-
-    public abstract DaoN noticiaDao();
     public abstract DaoP playerDao();
     public abstract DaoC categoriaDao();
 
