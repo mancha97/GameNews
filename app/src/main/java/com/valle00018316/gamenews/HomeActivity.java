@@ -1,5 +1,6 @@
 package com.valle00018316.gamenews;
 
+import android.accessibilityservice.AccessibilityService;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
@@ -13,6 +14,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,6 +41,7 @@ public class HomeActivity extends AppCompatActivity {
     private CatVM catviewm;
     GameNDatabase gameNDatabase;
     private MenuItem mPreviousMenuItem;
+    ScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,8 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_activity);
         navigationView= findViewById(R.id.navigationView);
         drawerLayout = findViewById(R.id.drawerLayout);
+
+
 
         gameNDatabase=GameNDatabase.getDatabase(getApplicationContext());
         catviewm= ViewModelProviders.of(this).get(CatVM.class);

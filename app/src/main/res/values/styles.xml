@@ -12,6 +12,7 @@
         <!--<item name="android:textColorHint">@color/grey</item>-->
         <!--<item name="android:textColorHighlight">@color/black</item>-->
         <item name="android:selectAllOnFocus">@color/colorAccent</item>
+
     </style>
 
 <!--    <style name="aa" parent="Theme.AppCompat.Light.NoActionBar">

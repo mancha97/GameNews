@@ -1,55 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
-    >
-
-       <android.support.v7.widget.AppCompatButton
-
-        android:id="@+id/btn_login"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark"
-        android:padding="16dp"
-        android:text="Login"
-        android:textColor="@color/white" />
-
-
-<ScrollView
-    android:id="@+id/scrollView"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:layout_above="@id/btn_login"
-    >
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    tools:context=".LoginActivity">
 
-    <LinearLayout
 
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="56dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="30dp"
         android:focusable="true"
-       >
+        android:focusableInTouchMode="true">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="110dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="12dp"
-            android:src="@drawable/canvas" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GameNews"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:layout_centerVertical="true"
+            android:id="@+id/mainLayout"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imagepaper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/canvas" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="GameNews"
+                    android:layout_below="@id/imagepaper"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="24sp" />
+
+            </RelativeLayout>
+
+
 
     <!-- Email Label -->
     <android.support.design.widget.TextInputLayout
@@ -57,13 +52,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/user"
         >
         <EditText android:id="@+id/input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:hint="Email"
+            android:textSize="16dp"
 
             />
     </android.support.design.widget.TextInputLayout>
@@ -73,23 +71,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        android:id="@+id/pass"
         >
         <EditText android:id="@+id/input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-
             android:hint="Password"
-
-
+            android:textSize="16dp"
             />
     </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_login"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pass"
+
+                android:background="@drawable/button"
+                android:text="Login"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
 
 </ScrollView>
 
-
-</RelativeLayout>
