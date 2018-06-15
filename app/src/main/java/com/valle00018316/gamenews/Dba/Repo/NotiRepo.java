@@ -2,27 +2,92 @@ package com.valle00018316.gamenews.Dba.Repo;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.valle00018316.gamenews.Dba.Dao.DaoN;
 import com.valle00018316.gamenews.Dba.Entidad.Noticia;
 import com.valle00018316.gamenews.Dba.GameNDatabase;
+import com.valle00018316.gamenews.GameNApi.Api;
+import com.valle00018316.gamenews.GameNApi.Deserializer.NoticiaD;
+import com.valle00018316.gamenews.Models.NoticiaM;
 
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class NotiRepo {
 
+    private final Context mContext;
+    private String access;
     private DaoN mNotiDao;
-    private LiveData<List<Noticia>> mAllNoti;
+
 
     public NotiRepo(Application application) {
         GameNDatabase db = GameNDatabase.getDatabase(application);
         mNotiDao = db.noticiaDao();
-        mAllNoti = mNotiDao.getAllN();
+        mContext = application.getApplicationContext();
+        SharedPreferences sharedPreferences=application.getSharedPreferences("logbait",MODE_PRIVATE);
+        access=sharedPreferences.getString("token","");
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED){
+            getNewsFromAPI();
+        }else {
+
+        }
+    }
+
+
+    public void getNewsFromAPI(){
+        Gson gson = new GsonBuilder().registerTypeAdapter(NoticiaM.class, new NoticiaD()).create();
+        Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(Api.END_POINT).addConverterFactory(GsonConverterFactory.create(gson));
+        Retrofit retrofit = retrofitBuilder.build();
+        Api apiG = retrofit.create(Api.class);
+
+        Call<List<NoticiaM>> notilista = apiG.noticias("Beared " + access);
+        notilista.enqueue(new Callback<List<NoticiaM>>() {
+            @Override
+            public void onResponse(Call<List<NoticiaM>> call, Response<List<NoticiaM>> response) {
+                for (NoticiaM noticiaM: response.body()){
+                    insert(new Noticia(
+                            noticiaM.getId(), noticiaM.getTitle(), noticiaM.getCoverImage(),
+                            noticiaM.getDescription(),noticiaM.getBody(),noticiaM.getGame(),
+                            noticiaM.getCreatedDate(),noticiaM.getIsFav()
+                            )
+                    );
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<NoticiaM>> call, Throwable t) {
+                if (t instanceof SocketTimeoutException){
+                    Toast.makeText(mContext, "Timed Out", Toast.LENGTH_SHORT).show();
+                }else if (t instanceof Exception){
+                    Toast.makeText(mContext, "Something went wrong \n Please try again later", Toast.LENGTH_SHORT).show();
+                    t.printStackTrace();
+                }
+            }
+        });
     }
 
     public LiveData<List<Noticia>> getAllNoti() {
-        return mAllNoti;
+        return mNotiDao.getAllN();
     }
 
 

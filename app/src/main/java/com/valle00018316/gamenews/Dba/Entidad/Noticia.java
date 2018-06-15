@@ -11,8 +11,8 @@ public class Noticia {
 
     @NonNull
     @PrimaryKey
-    private String id;
-    private String title, coverImage, description, body,createdDate, game;
+
+    private String id,title, coverImage, description, body,createdDate, game;
 
     private int isFav;
 
