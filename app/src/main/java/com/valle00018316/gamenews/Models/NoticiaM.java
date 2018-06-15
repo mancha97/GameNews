@@ -8,12 +8,16 @@ public class NoticiaM {
 
     private int isFav;
 
-    public NoticiaM() {
-
+    public NoticiaM(String id, String title, String coverImage, String description, String body, String createdDate, String game, int isFav) {
+        this.id = id;
+        this.title = title;
+        this.coverImage = coverImage;
+        this.description = description;
+        this.body = body;
+        this.createdDate = createdDate;
+        this.game = game;
+        this.isFav = isFav;
     }
-
-
-
 
     public String getId() {
 
