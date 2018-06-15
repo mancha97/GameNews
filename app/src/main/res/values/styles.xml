@@ -15,12 +15,12 @@
 
     </style>
 
-<!--    <style name="aa" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorControlNormal">@color/grey</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark</item>
-        <item name="colorControlHighlight">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorHint">@color/grey</item>
-    </style>-->
+    <style name="MyCardViewStyle" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+
+
+
+    </style>
 
 </resources>
