@@ -33,37 +33,68 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    NavigationView navigationView;
     Toolbar toolbar;
+    NavigationView navigationView;
     private CatVM catviewm;
+    GameNDatabase gameNDatabase;
+    private MenuItem mPreviousMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_activity);
+        navigationView= findViewById(R.id.navigationView);
+        drawerLayout = findViewById(R.id.drawerLayout);
 
-
-        GameNDatabase.getDatabase(getApplicationContext());
+        gameNDatabase=GameNDatabase.getDatabase(getApplicationContext());
         catviewm= ViewModelProviders.of(this).get(CatVM.class);
         catviewm.getCategories().observe(this, new Observer<List<Categoria>>() {
             @Override
             public void onChanged(@Nullable List<Categoria> categorias) {
-                setGameMenu(categorias);
+
+                navigationView.getMenu().findItem(R.id.item2).getSubMenu().clear();
+
+                for (Categoria game : categorias){
+                    navigationView.getMenu().findItem(R.id.item2).getSubMenu().add(game.getName().toUpperCase());
+                }
+                for(int i=0;i<navigationView.getMenu().findItem(R.id.item2).getSubMenu().size();i++){
+
+                    String aux=navigationView.getMenu().findItem(R.id.item2).getSubMenu().getItem(i).getTitle().toString();
+
+                    if(aux.equals("OVERWATCH")){
+                        navigationView.getMenu().findItem(R.id.item2).getSubMenu().getItem(i).setIcon(R.drawable.overwatch);
+                    }
+                    else if(aux.equals("CSGO")){
+                        navigationView.getMenu().findItem(R.id.item2).getSubMenu().getItem(i).setIcon(R.drawable.csgo0);
+                    }
+                    else if(aux.equals("LOL")){
+                        navigationView.getMenu().findItem(R.id.item2).getSubMenu().getItem(i).setIcon(R.drawable.lol);
+                    }
+                    else{
+                        navigationView.getMenu().findItem(R.id.item2).getSubMenu().getItem(i).setIcon(R.drawable.joystick);
+                    }
+                }
             }
         });
 
-        drawerLayout = findViewById(R.id.drawerLayout);
-        navigationView = findViewById(R.id.navigationView);
 
 
-//        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                item.setChecked(true);
-//                drawerLayout.closeDrawers();
-//                return true;
-//            }
-//        });
+
+
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                item.setCheckable(true);
+                item.setChecked(true);
+                if (mPreviousMenuItem != null && mPreviousMenuItem != item) {
+                    mPreviousMenuItem.setChecked(false);
+                }
+                mPreviousMenuItem = item;
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
 
 
 //        navigationView.setNavigationItemSelectedListener(
@@ -136,11 +167,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setGameMenu(List<Categoria> listag){
-        navigationView.getMenu().findItem(R.id.item2).getSubMenu().clear();
-
-        for (Categoria game : listag){
-            navigationView.getMenu().findItem(R.id.item2).getSubMenu().add(game.getName().toUpperCase());
-        }
     }
 
 }

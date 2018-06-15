@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group>
+
+        <item
+            android:id="@+id/item0"
+            android:icon="@drawable/newspaper"
+            android:title="Home"
+            />
 
         <item
             android:id="@+id/item1"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Favoritos"/>
+            android:icon="@drawable/fav"
+            android:title="Fav"/>
         <item
             android:id="@+id/item2"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="News">
+
+            android:title="Games">
             <menu>
 
             </menu>
         </item>
 
-        <item
-            android:id="@+id/item3"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Settings"/>
 
         <item
-            android:id="@+id/item4"
-            android:icon="@drawable/ic_launcher_background"
-            android:title="Log out"/>
+            android:title="Other Options">
+            <menu>
+                <item
+                    android:id="@+id/item3"
+                    android:icon="@drawable/settings"
+                    android:title="Settings"/>
 
+                <item
+                    android:id="@+id/item4"
+                    android:icon="@drawable/logout"
+                    android:title="Log Out"/>
+            </menu>
+        </item>
 
     </group>
+
+
 </menu>
