@@ -47,14 +47,14 @@ public class NotiRepo {
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED){
-            getNewsFromAPI();
+            fetchapi();
         }else {
 
         }
     }
 
 
-    public void getNewsFromAPI(){
+    public void fetchapi(){
         Gson gson = new GsonBuilder().registerTypeAdapter(NoticiaM.class, new NoticiaD()).create();
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder().baseUrl(Api.END_POINT).addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = retrofitBuilder.build();
