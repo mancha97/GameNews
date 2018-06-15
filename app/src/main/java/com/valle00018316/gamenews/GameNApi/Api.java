@@ -3,6 +3,7 @@ package com.valle00018316.gamenews.GameNApi;
 
 
 import com.valle00018316.gamenews.Dba.Entidad.Noticia;
+import com.valle00018316.gamenews.Models.NoticiaM;
 
 import java.lang.reflect.Array;
 import java.util.List;
@@ -29,5 +30,5 @@ public interface Api {
     Call<List<String>> list(@Header("Authorization") String autori);
 
     @GET("/news")
-    Call<List<Noticia>>noticias(@Header("Authorization") String autori);
+    Call<List<NoticiaM>>noticias(@Header("Authorization") String autori);
 }
