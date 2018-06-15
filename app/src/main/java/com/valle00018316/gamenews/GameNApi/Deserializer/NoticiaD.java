@@ -7,15 +7,16 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.valle00018316.gamenews.Dba.Entidad.Noticia;
+import com.valle00018316.gamenews.Models.NoticiaM;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoticiaD implements JsonDeserializer<Noticia>{
+public class NoticiaD implements JsonDeserializer<NoticiaM>{
 
     @Override
-    public Noticia deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public NoticiaM deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
 
         String id,title,coverimage,description,body,game,cdate,isfav;
@@ -66,7 +67,7 @@ public class NoticiaD implements JsonDeserializer<Noticia>{
             cdate="";
         }
 
-        Noticia news = new Noticia(id,title,coverimage,description,body,game,cdate,0);
+        NoticiaM news = new NoticiaM(id,title,coverimage,description,body,game,cdate,0);
 
         return news;
     }
