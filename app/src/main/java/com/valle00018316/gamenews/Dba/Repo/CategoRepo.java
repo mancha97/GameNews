@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -83,6 +84,7 @@ public class CategoRepo {
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
                 for (String name : response.body()){
                     insert(new Categoria(name));
+
                 }
             }
 
