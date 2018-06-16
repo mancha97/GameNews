@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.valle00018316.gamenews.Dba.Entidad.Noticia;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface DaoN {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertnoti(Noticia noticia);
+    void insertnoti(Noticia... noticia);
 
     @Query("SELECT*FROM Noticia")
     LiveData<List<Noticia>> getAllN();
@@ -24,6 +25,11 @@ public interface DaoN {
 
     @Query("SELECT*FROM Noticia WHERE title like :query")
     LiveData<List<Noticia>> getNBQuery(String query);
+
+
+    @Update
+    void update(Noticia... news);
+
 
 
 }

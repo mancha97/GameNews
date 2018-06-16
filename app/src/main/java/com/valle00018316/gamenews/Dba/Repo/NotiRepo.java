@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -42,15 +43,13 @@ public class NotiRepo {
         mNotiDao = db.noticiaDao();
         mContext = application.getApplicationContext();
         SharedPreferences sharedPreferences=application.getSharedPreferences("logbait",MODE_PRIVATE);
-        access=sharedPreferences.getString("token","");
+        access=sharedPreferences.getString("logbait","");
 
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED){
-            fetchapi();
-        }else {
 
-        }
+         fetchapi();
+         Log.d("D", "Instanceando Repo... ");
     }
 
 
@@ -64,14 +63,19 @@ public class NotiRepo {
         notilista.enqueue(new Callback<List<NoticiaM>>() {
             @Override
             public void onResponse(Call<List<NoticiaM>> call, Response<List<NoticiaM>> response) {
-                for (NoticiaM noticiaM: response.body()){
-                    insert(new Noticia(
-                            noticiaM.getId(), noticiaM.getTitle(), noticiaM.getCoverImage(),
-                            noticiaM.getDescription(),noticiaM.getBody(),noticiaM.getGame(),
-                            noticiaM.getCreatedDate(),noticiaM.getIsFav()
-                            )
-                    );
-                }
+                if(response.isSuccessful()){
+
+                    for (NoticiaM noticiaM: response.body()){
+                        insert(new Noticia(
+                                noticiaM.getId(), noticiaM.getTitle(), noticiaM.getCoverImage(),
+                                noticiaM.getDescription(),noticiaM.getBody(),noticiaM.getCreatedDate(),
+                                noticiaM.getGame(),noticiaM.getIsFav()
+                                )
+                        );
+                        Log.d("News",noticiaM.getCreatedDate().toString());
+                    }
+                }else
+                    Log.d("News","Mancha la esta mordiendo");
             }
 
             @Override
@@ -89,23 +93,44 @@ public class NotiRepo {
     public LiveData<List<Noticia>> getAllNoti() {
         return mNotiDao.getAllN();
     }
-
+    public LiveData<List<Noticia>> getNBGame(String game) { return mNotiDao.getNBGame(game); }
+    public LiveData<List<Noticia>> getNBQuery(String query) { return mNotiDao.getNBQuery(query); }
 
     public void insert (Noticia noticia) {
-        new insertAsyncTask(mNotiDao).execute(noticia);
+        new InsertAsyncTask(mNotiDao).execute(noticia);
+
     }
 
-    private static class insertAsyncTask extends AsyncTask<Noticia, Void, Void> {
+    private static class InsertAsyncTask extends AsyncTask<Noticia, Void, Void>{
 
-        private DaoN mAsyncTaskDao;
+        private DaoN myAsyncTask;
 
-        insertAsyncTask(DaoN dao) {
-            mAsyncTaskDao = dao;
+        InsertAsyncTask(DaoN dao){
+            myAsyncTask = dao;
         }
 
         @Override
-        protected Void doInBackground(final Noticia... params) {
-            mAsyncTaskDao.insertnoti(params[0]);
+        protected Void doInBackground(Noticia... noticias) {
+            myAsyncTask.insertnoti(noticias);
+            return null;
+        }
+    }
+
+    public void update(Noticia noticia){
+        new UpdateAsyncTask(mNotiDao).execute(noticia);
+    }
+
+    private static class UpdateAsyncTask extends AsyncTask<Noticia, Void, Void>{
+
+        private DaoN myAsyncTask;
+
+        UpdateAsyncTask(DaoN dao){
+            myAsyncTask = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Noticia... noticias) {
+            myAsyncTask.update(noticias);
             return null;
         }
     }

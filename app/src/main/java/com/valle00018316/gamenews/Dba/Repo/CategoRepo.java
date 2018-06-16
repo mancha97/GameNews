@@ -41,7 +41,7 @@ public class CategoRepo {
         this.catDao = db.categoriaDao();
         mContext = application.getApplicationContext();
         SharedPreferences sharedPreferences=application.getSharedPreferences("logbait",MODE_PRIVATE);
-        access=sharedPreferences.getString("token","");
+        access=sharedPreferences.getString("logbait","");
 
         cargarData();
     }
@@ -82,10 +82,14 @@ public class CategoRepo {
         listaG.enqueue(new Callback<List<String>>() {
             @Override
             public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                for (String name : response.body()){
-                    insert(new Categoria(name));
+                if(response.isSuccessful()) {
+                    for (String name : response.body()) {
+                        insert(new Categoria(name));
 
+                    }
                 }
+                else
+                    Log.d("CategoRepo","MANCHA LA ESTA CAGANDO");
             }
 
             @Override

@@ -16,7 +16,7 @@ public class Noticia {
 
     private int isFav;
 
-    public Noticia(@NonNull String id, String title, String coverImage, String description, String body, String game, String createdDate,  int isFav) {
+    public Noticia(@NonNull String id, String title, String coverImage, String description, String body, String createdDate,String game ,  int isFav) {
         this.id = id;
         this.title = title;
         this.coverImage = coverImage;
