@@ -18,10 +18,9 @@ public class NotiVM extends AndroidViewModel {
     public NotiVM (Application application) {
         super(application);
         mRepository = new NotiRepo(application);
-        mAllNoti = mRepository.getAllNoti();
     }
 
-    LiveData<List<Noticia>> getAllNoti() { return mAllNoti; }
+    public LiveData<List<Noticia>> getAllNoti() { return mRepository.getAllNoti(); }
 
     public void insert(Noticia noticia) { mRepository.insert(noticia); }
 }

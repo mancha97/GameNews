@@ -14,23 +14,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SharedPreferences sharedPreferences=this.getSharedPreferences("logbait",MODE_PRIVATE);
+        SharedPreferences sharedPreferences=getApplicationContext().getSharedPreferences("logbait",MODE_PRIVATE);
 
         if(sharedPreferences.contains("logbait")){
             Intent homeIntent= new Intent(MainActivity.this, HomeActivity.class);
             startActivity(homeIntent);
             finish();
+        }else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Intent homeIntent= new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(homeIntent);
+                    finish();
+                }
+            }, SPLASH_TIME_OUT);
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
 
-                Intent homeIntent= new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(homeIntent);
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
 
     }
 
