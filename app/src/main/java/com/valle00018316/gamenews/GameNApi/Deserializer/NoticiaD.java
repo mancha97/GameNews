@@ -19,7 +19,8 @@ public class NoticiaD implements JsonDeserializer<NoticiaM>{
     public NoticiaM deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
 
 
-        String id,title,coverimage,description,body,game,cdate,isfav;
+        String id,title,coverimage,description,body,game,cdate;
+        int isfav;
 
         JsonObject newsJson = json.getAsJsonObject();
 
@@ -61,13 +62,19 @@ public class NoticiaD implements JsonDeserializer<NoticiaM>{
         }else {
             game="";
         }
-        if (newsJson.get("create_date") != null){
+        if (newsJson.get("created_date") != null){
             cdate=newsJson.get("created_date").getAsString();
         }else {
             cdate="";
         }
+        if (newsJson.get("__v") != null){
+            isfav=newsJson.get("__v").getAsInt();
 
-        NoticiaM news = new NoticiaM(id,title,coverimage,description,body,game,cdate,0);
+        }else {
+            isfav=0;
+        }
+
+        NoticiaM news = new NoticiaM( id,  title,  coverimage,  description,  body,  cdate, game ,  isfav);
 
         return news;
     }
