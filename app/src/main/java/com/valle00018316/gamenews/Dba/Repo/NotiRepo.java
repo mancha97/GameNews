@@ -47,8 +47,11 @@ public class NotiRepo {
 
         ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED){
+            fetchapi();
+        }else {
+        }
 
-         fetchapi();
          Log.d("D", "Instanceando Repo... ");
     }
 
@@ -72,7 +75,7 @@ public class NotiRepo {
                                 noticiaM.getGame(),noticiaM.getIsFav()
                                 )
                         );
-                        Log.d("News",noticiaM.getCreatedDate().toString());
+
                     }
                 }else
                     Log.d("News","Mancha la esta mordiendo");

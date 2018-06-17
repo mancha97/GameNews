@@ -1,64 +1,54 @@
 package com.valle00018316.gamenews.Frags;
 
-
-import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.valle00018316.gamenews.Dba.Entidad.Noticia;
+import com.valle00018316.gamenews.Dba.Entidad.Player;
 import com.valle00018316.gamenews.Dba.GameNDatabase;
 import com.valle00018316.gamenews.Frags.Adapters.NotiRvAdapter;
+import com.valle00018316.gamenews.Frags.Adapters.PlayerRvAdapter;
 import com.valle00018316.gamenews.Models.NoticiaM;
 import com.valle00018316.gamenews.R;
-
 import com.valle00018316.gamenews.ViewM.NotiVM;
+import com.valle00018316.gamenews.ViewM.PlayerVM;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentNoti extends Fragment {
+public class FragPlayer extends Fragment {
 
-    private NotiVM notiviewm;
-    private  GameNDatabase gameNDatabase;
+    private PlayerVM playerVM;
+    private GameNDatabase gameNDatabase;
     private View v;
     private RecyclerView recyclerView;
 
     public static List<Noticia> list = new ArrayList<>();
-    public static List<NoticiaM> filteredContactList = new ArrayList<>();
-    public static List<NoticiaM> aux = new ArrayList<>();
-    NotiRvAdapter adapter;
+
+    PlayerRvAdapter adapter;
     private GridLayoutManager gridLayoutManager;
     private String game;
     private int type;
     private Context context;
 
 
-
-//    public static
-
-    public static FragmentNoti newInstance(int type, String game) {
+    public static FragPlayer newInstance(int type, String game) {
         Bundle arguments = new Bundle();
         arguments.putInt("type", type);
         arguments.putString("game", game);
 
-        FragmentNoti newsFragment = new FragmentNoti();
+        FragPlayer newsFragment = new FragPlayer();
         newsFragment.setArguments(arguments);
         return newsFragment;
     }
@@ -76,10 +66,10 @@ public class FragmentNoti extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        v = inflater.inflate(R.layout.frag_allnoti, container, false);
-        recyclerView = v.findViewById(R.id.noticias_rv);
+        v = inflater.inflate(R.layout.frag_players, container, false);
+        recyclerView = v.findViewById(R.id.player_rv);
 
-        gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
@@ -87,39 +77,26 @@ public class FragmentNoti extends Fragment {
             }
         });
 
-        adapter = new NotiRvAdapter(getContext());
+        adapter = new PlayerRvAdapter(getContext());
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
 
         gameNDatabase= GameNDatabase.getDatabase(getContext());
 
-        if(game!=""){
 
-            notiviewm = ViewModelProviders.of(this).get(NotiVM.class);
-            notiviewm.getNBGame(game).observe(this, new Observer<List<Noticia>>() {
+
+            playerVM = ViewModelProviders.of(this).get(PlayerVM.class);
+            playerVM.getNBGame(game.toLowerCase()).observe(this, new Observer<List<Player>>() {
                 @Override
-                public void onChanged(@Nullable List<Noticia> noticias) {
-                    adapter.setN(noticias);
-                    for (Noticia g : noticias) {
+                public void onChanged(@Nullable List<Player> p) {
 
-                    }
+                    adapter.setN(p);
+
 
                 }
             });
-        }else {
-            notiviewm = ViewModelProviders.of(this).get(NotiVM.class);
-            notiviewm.getAllNoti().observe(this, new Observer<List<Noticia>>() {
-                @Override
-                public void onChanged(@Nullable List<Noticia> noticias) {
-                    adapter.setN(noticias);
-                    for (Noticia g : noticias) {
 
-                    }
-
-                }
-            });
-        }
 
         return v;
 

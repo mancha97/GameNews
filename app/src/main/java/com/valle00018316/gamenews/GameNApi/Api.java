@@ -4,6 +4,7 @@ package com.valle00018316.gamenews.GameNApi;
 
 import com.valle00018316.gamenews.Dba.Entidad.Noticia;
 import com.valle00018316.gamenews.Models.NoticiaM;
+import com.valle00018316.gamenews.Models.PlayerM;
 
 import java.lang.reflect.Array;
 import java.util.List;
@@ -25,7 +26,8 @@ public interface Api {
             @Field("user") String username,
             @Field("password") String password
     );
-
+    @GET("/players")
+    Call<List<PlayerM>> getPlayers(@Header("Authorization") String authorization);
     @GET("/news/type/list")
     Call<List<String>> list(@Header("Authorization") String autori);
 

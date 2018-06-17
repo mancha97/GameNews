@@ -78,11 +78,8 @@
 
         <TextView
 
-            android:maxLines="1"
-            android:scrollHorizontally="true"
+            android:lines="2"
             android:ellipsize="end"
-            android:singleLine="true"
-
             android:id="@+id/supporting_text"
             android:layout_width="0dp"
             android:text="LoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLoresLores"

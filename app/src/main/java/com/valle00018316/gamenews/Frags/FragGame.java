@@ -58,7 +58,7 @@ public class FragGame extends Fragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
 
         viewPagerAdapter.addFragment(FragmentNoti.newInstance(2, game.toLowerCase()), "News" );
-        viewPagerAdapter.addFragment(FragmentNoti.newInstance(2, game.toLowerCase()), "Players" );
+        viewPagerAdapter.addFragment(FragPlayer.newInstance(3, game.toLowerCase()), "Players" );
         //viewPagerAdapter.addFragment("Photos", GamePicturesFragment.newInstance(game));
 
         viewPager.setAdapter(viewPagerAdapter);
