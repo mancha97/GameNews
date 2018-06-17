@@ -69,7 +69,7 @@ public class FragPlayer extends Fragment {
         v = inflater.inflate(R.layout.frag_players, container, false);
         recyclerView = v.findViewById(R.id.player_rv);
 
-        gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
+        gridLayoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {

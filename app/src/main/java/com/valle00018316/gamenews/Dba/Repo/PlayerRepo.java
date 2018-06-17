@@ -42,7 +42,7 @@ public class PlayerRepo {
 
     public PlayerRepo(Application application) {
         GameNDatabase db=GameNDatabase.getDatabase(application);
-        this.playDao = db.playerDao();
+        playDao = db.playerDao();
         mContext = application.getApplicationContext();
         SharedPreferences sharedPreferences=application.getSharedPreferences("logbait",MODE_PRIVATE);
         access=sharedPreferences.getString("logbait","");

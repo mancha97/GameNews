@@ -28,28 +28,28 @@ public class ListP implements JsonDeserializer<PlayerM> {
             id="";
         }
 
-        if (newsJson.get("title") != null){
-            avatar=newsJson.get("title").getAsString();
+        if (newsJson.get("name") != null){
+            avatar=newsJson.get("name").getAsString();
         }else {
             avatar="";
         }
 
-        if (newsJson.get("coverImage") != null){
-            name=newsJson.get("coverImage").getAsString();
+        if (newsJson.get("biografia") != null){
+            name=newsJson.get("biografia").getAsString();
         }else {
             name=("");
         }
 
 
 
-        if (newsJson.get("description") != null){
-            bio=newsJson.get("description").getAsString();
+        if (newsJson.get("avatar") != null){
+            bio=newsJson.get("avatar").getAsString();
         }else {
             bio="";
         }
 
-        if (newsJson.get("body") != null){
-            game=newsJson.get("body").getAsString();
+        if (newsJson.get("game") != null){
+            game=newsJson.get("game").getAsString();
         }else {
             game="";
         }

@@ -52,16 +52,16 @@ public class PlayerRvAdapter extends RecyclerView.Adapter<PlayerRvAdapter.ViewHo
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         Picasso.with(mcontext)
-                .load(mListaPlayers.get(position).getAvatar())
+                .load(mListaPlayers.get(position).getBio())
                 .error(R.drawable.picture)
                 .into(holder.coverImage);
 
 //
 //  avatar, coverImage,favorito;
 
-        holder.title.setText(mListaPlayers.get(position).getName());
+        holder.title.setText(mListaPlayers.get(position).getAvatar());
         holder.date.setText(mListaPlayers.get(position).getGame());
-        holder.description.setText(mListaPlayers.get(position).getBio());
+        holder.description.setText(mListaPlayers.get(position).getName());
 
 
 
