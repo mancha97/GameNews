@@ -21,6 +21,7 @@ public class NotiVM extends AndroidViewModel {
     }
 
     public LiveData<List<Noticia>> getAllNoti() { return mRepository.getAllNoti(); }
+    public LiveData<List<Noticia>>  getNBGame(String game){return mRepository.getNBGame(game);}
 
     public void insert(Noticia noticia) { mRepository.insert(noticia); }
 }

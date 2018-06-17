@@ -4,6 +4,7 @@ package com.valle00018316.gamenews.Frags;
 import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -44,14 +45,18 @@ public class FragmentNoti extends Fragment {
     public static List<NoticiaM> aux = new ArrayList<>();
     NotiRvAdapter adapter;
     private GridLayoutManager gridLayoutManager;
+    private String game;
+    private int type;
+    private Context context;
+
 
 
 //    public static
 
-    public static FragmentNoti newInstance(int type) {
-
+    public static FragmentNoti newInstance(int type, String game) {
         Bundle arguments = new Bundle();
         arguments.putInt("type", type);
+        arguments.putString("game", game);
 
         FragmentNoti newsFragment = new FragmentNoti();
         newsFragment.setArguments(arguments);
@@ -61,6 +66,10 @@ public class FragmentNoti extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        type = getArguments().getInt("type");
+        game = getArguments().getString("game");
+        context = getContext();
+
     }
 
     @Nullable
@@ -84,18 +93,34 @@ public class FragmentNoti extends Fragment {
 
 
         gameNDatabase= GameNDatabase.getDatabase(getContext());
-        notiviewm= ViewModelProviders.of(this).get(NotiVM.class);
-        notiviewm.getAllNoti().observe(this, new Observer<List<Noticia>>() {
-            @Override
-            public void onChanged(@Nullable List<Noticia> noticias) {
-                   adapter.setN(noticias);
-                   for(Noticia g: noticias){
-                       Log.d("VACIL", g.getGame());
-                   }
 
-            }
-        });
+        if(game!=""){
+            Log.d("no firl", "FILTRADO");
+            Log.d("no firl", game);
+            notiviewm = ViewModelProviders.of(this).get(NotiVM.class);
+            notiviewm.getNBGame(game).observe(this, new Observer<List<Noticia>>() {
+                @Override
+                public void onChanged(@Nullable List<Noticia> noticias) {
+                    adapter.setN(noticias);
+                    for (Noticia g : noticias) {
+                        Log.d("VACIL", g.getTitle());
+                    }
 
+                }
+            });
+        }else {
+            notiviewm = ViewModelProviders.of(this).get(NotiVM.class);
+            notiviewm.getAllNoti().observe(this, new Observer<List<Noticia>>() {
+                @Override
+                public void onChanged(@Nullable List<Noticia> noticias) {
+                    adapter.setN(noticias);
+                    for (Noticia g : noticias) {
+
+                    }
+
+                }
+            });
+        }
 
         return v;
 

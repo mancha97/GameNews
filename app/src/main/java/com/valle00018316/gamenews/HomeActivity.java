@@ -14,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ScrollView;
@@ -22,6 +23,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.valle00018316.gamenews.Dba.Entidad.Categoria;
 import com.valle00018316.gamenews.Dba.GameNDatabase;
+import com.valle00018316.gamenews.Frags.FragGame;
 import com.valle00018316.gamenews.Frags.FragmentNoti;
 import com.valle00018316.gamenews.GameNApi.Api;
 import com.valle00018316.gamenews.GameNApi.Deserializer.ListG;
@@ -54,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.content_frame, new FragmentNoti());
+        fragmentTransaction.replace(R.id.content_frame, FragmentNoti.newInstance(0,""));
         fragmentTransaction.commit();
 
         toolbar = (Toolbar) findViewById(R.id.appsbar);
@@ -127,13 +129,13 @@ public class HomeActivity extends AppCompatActivity {
                         switch (menuItem.getItemId()) {
                             case R.id.item0:
 
-                                fragment = new FragmentNoti();
+                                fragment = FragmentNoti.newInstance(0,"");
                                 fragmentTransaction = true;
                                 break;
-                            case R.id.item1:
-                                fragment = new FragmentNoti();
-                                fragmentTransaction = true;
-                                break;
+//                            case R.id.item1:
+////                                fragment = FragGame.newInstance("csgo");
+//                                fragmentTransaction = true;
+//                                break;
 //                            case R.id.item3:
 //                                fragment = new Fragment3();
 //                                fragmentTransaction = true;
@@ -146,6 +148,11 @@ public class HomeActivity extends AppCompatActivity {
 //                                fragment = new Fragment5();
 //                                fragmentTransaction = true;
 //                                break;
+                            default:
+                                fragment = FragGame.newInstance(menuItem.getTitle().toString());
+                                fragmentTransaction = true;
+                                Log.d("ss", menuItem.getTitle().toString());
+                                break;
                         }
 
                         if(fragmentTransaction) {

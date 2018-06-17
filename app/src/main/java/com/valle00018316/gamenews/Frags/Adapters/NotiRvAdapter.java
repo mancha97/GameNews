@@ -48,8 +48,8 @@ public class NotiRvAdapter extends RecyclerView.Adapter<NotiRvAdapter.ViewHolder
         inflater = LayoutInflater.from(mcontext);
         View view = inflater.inflate(R.layout.item_allnoti, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-//        mDialog = new Dialog(mcontext);
-//        mDialog.setContentView(R.layout.ds);
+        mDialog = new Dialog(mcontext);
+        mDialog.setContentView(R.layout.fullnew);
         return viewHolder;
     }
 
@@ -97,43 +97,27 @@ public class NotiRvAdapter extends RecyclerView.Adapter<NotiRvAdapter.ViewHolder
 
 
 
-//        llamada.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
 //
-//                dialContactPhone(mListContacts.get(position).getNumber());
-//            }
-//        });
 
-//        contacto.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final TextView tvname = mDialog.findViewById(R.id.display_name);
-//                final TextView tvnumber = mDialog.findViewById(R.id.display_number);
-//                tvname.setText(mListContacts.get(position).getName());
-//                tvnumber.setText(mListContacts.get(position).getNumber());
-//                mDialog.show();
-//
-//                ImageView share = mDialog.findViewById(R.id.display_share);
-//                share.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(mcontext, "Compartiendo datos", Toast.LENGTH_SHORT).show();
-//
-//                        Intent shareIntent = new Intent();
-//                        shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
-//                        shareIntent.setType("*/*");
-//                        shareIntent.putExtra(Intent.EXTRA_TEXT, mcontext.getString(R.string.name) + ": " + mListContacts.get(position).getName().toString() + "\n" + mcontext.getString(R.string.num) + ": " + mListContacts.get(position).getNumber().toString());
-//                        mcontext.startActivity(shareIntent);
-//
-//                    }
-//                });
-//            }
-//
-//
-//
-//
-//        });
+        holder.coverImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final TextView title = mDialog.findViewById(R.id.newfulltitle);
+                final TextView body = mDialog.findViewById(R.id.body);
+                final ImageView coverimage = mDialog.findViewById(R.id.newfullimage);
+                title.setText(mListaNoticias.get(position).getTitle());
+                body.setText(mListaNoticias.get(position).getBody());
+                Picasso.with(mcontext)
+                        .load(mListaNoticias.get(position).getCoverImage())
+                        .error(R.drawable.picture)
+                        .into(coverimage);
+
+                mDialog.show();
+
+
+            }
+
+        });
 
 
 //
